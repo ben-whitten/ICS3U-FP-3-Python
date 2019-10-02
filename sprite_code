@@ -1,0 +1,36 @@
+# !/usr/bin/env python3
+
+# Created by: Ben Whitten
+# Created on: October 2019
+# This program shows a sprite on the pybadge.
+
+import ugame
+import stage
+
+# an image bank for CircuitPython
+image_bank_1 = stage.Bank.from_bmp16("ball.bmp")
+sprites = []
+
+def main():
+    # This is what fills in the background
+    background = stage.Grid(image_bank_1, 10, 8)
+
+    # creates the sprites
+    ball_1 = stage.Sprite(image_bank_1, 3, 64, 56)
+    sprites.append(ball_1)
+    ball_2 = stage.Sprite(image_bank_1, 2, 75, 56)
+    sprites.insert(0, ball_2)
+
+    game = stage.Stage(ugame.display, 60)
+    game.layers = sprites + [background]
+    game.render_block()
+
+# This makes it cycle
+    while True:
+        #This is what draws the sprites
+        game.render_sprites(sprites)
+        game.tick()
+
+
+if __name__ == "__main__":
+    main()
